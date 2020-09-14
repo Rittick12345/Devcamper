@@ -12,10 +12,12 @@ connectDB.connectDB();
 const bootcamps = require('./routes/bootcamps');
 
 const app = express();
-//using morgan middleware
+app.use(express.json()); //works for bodyparser
+
 if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+  app.use(morgan('dev')); //using morgan middleware
 }
+
 //mount the bootcamp router
 app.use('/api/v1/bootcamps/', bootcamps);
 

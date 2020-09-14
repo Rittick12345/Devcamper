@@ -1,7 +1,9 @@
+const mongoose = require('mongoose');
+const Bootcamp = require('../models/Bootcamp');
 //@desc             GET all bootcamps
 //@route            Get/api/bootcamps
 //@access           public
-exports.getBootcamps = (req, res, next) => {
+exports.getBootcamps = async (req, res, next) => {
   res.status(200).json({ success: true, msg: 'show all bootcamps' });
 };
 
@@ -18,6 +20,7 @@ exports.getBootcamp = (req, res, next) => {
 //@route            Get/api/bootcamps
 //@access           private
 exports.createBootcamp = (req, res, next) => {
+  Bootcamp.create(req.body);
   res.status(201).json({ success: true, msg: 'bootcamps created' });
 };
 
