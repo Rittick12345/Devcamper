@@ -1,4 +1,5 @@
 const Bootcamp = require('../models/Bootcamp');
+const ErrorResponse = require('../utils/errorResponse');
 //@desc             GET all bootcamps
 //@route            Get/api/v1/bootcamps
 //@access           public
@@ -6,13 +7,15 @@ exports.getBootcamps = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.find();
     if (!bootcamp) {
-      return res.status(404).json({ success: false });
+      return next(
+        new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404)
+      );
     }
     res
       .status(200)
       .json({ success: true, count: bootcamp.length, data: bootcamp });
   } catch (error) {
-    res.status(500).json({ success: false, err: error.message });
+    next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
   }
 };
 
@@ -23,11 +26,13 @@ exports.getBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamp.findById(req.params.id);
     if (!bootcamp) {
-      return res.status(404).json({ success: false });
+      return next(
+        new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404)
+      );
     }
     res.status(200).json({ success: true, data: bootcamp });
   } catch (error) {
-    res.status(404).json({ success: false, err: error.message });
+    next(new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404));
   }
 };
 
@@ -42,7 +47,7 @@ exports.createBootcamp = async (req, res, next) => {
     }
     res.status(201).json({ success: true, data: bootcamp });
   } catch (error) {
-    res.status(404).json({ success: false, err: error.message });
+    res.status(404).json({ success: false, err: error });
   }
 };
 
@@ -64,7 +69,7 @@ exports.updateBootcamp = async (req, res, next) => {
       msg: `updating a bootcamp ${req.params.id}`,
     });
   } catch (error) {
-    res.status(404).json({ success: false, err: error.message });
+    res.status(404).json({ success: false, err: error });
   }
 };
 
@@ -83,6 +88,6 @@ exports.deleteBootcamp = async (req, res, next) => {
       msg: `deleting the bootcamp ${req.params.id}`,
     });
   } catch (error) {
-    res.status(404).json({ success: false, err: error.message });
+    res.status(404).json({ success: false, err: error });
   }
 };

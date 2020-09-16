@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 const colors = require('colors'); //add colors to console
 
@@ -20,6 +21,9 @@ if (process.env.NODE_ENV === 'development') {
 
 //mount the bootcamp router
 app.use('/api/v1/bootcamps/', bootcamps);
+
+//error handler function
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
