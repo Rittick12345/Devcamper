@@ -28,10 +28,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(
-    `server is  running in ${process.env.NODE_ENV} environment at ${PORT}`
-      .yellow.bold
-  );
+  console.log(`server is  running in ${process.env.NODE_ENV} environment at ${PORT}`.yellow.bold);
 });
 process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`.red);

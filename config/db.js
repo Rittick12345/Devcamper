@@ -1,4 +1,4 @@
-const { cyan } = require('colors');
+const colors = require('colors');
 const mongoose = require('mongoose');
 
 exports.connectDB = async () => {
